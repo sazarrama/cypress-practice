@@ -35,7 +35,7 @@ export class commonActions {
 
     getAlert()
     {
-        return cy.get(this.mainContainer).find(this.dismissAlert).parent(this.alert)
+        return cy.get(this.mainContainer).find(this.dismissAlert).parent(this.alert).should('be.visible')
     }
 
     navigateToCategory(category)
