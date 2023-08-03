@@ -15,6 +15,11 @@ module.exports = defineConfig({
       */
       // return require('cypress/plugins/index.js')(on, config)
     },
-    baseUrl: 'https://the-internet.herokuapp.com/',
+    specPattern: "cypress/e2e/**/*.js",
+    baseUrl: 'https://automationteststore.com',
+    defaultCommandTimeout: 10000,
+    pageLoadTimeout: 10000,
+    retries: 0,
+    
   },
 })

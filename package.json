@@ -1,8 +1,12 @@
 {
-  "name": "cypress-starter-kit",
+  "name": "cypress-practice",
   "version": "10.1.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "cypress": "^12.10.0",
+    "npx": "^10.2.2"
+  },
   "directories": {
     "test": "tests"
   },
