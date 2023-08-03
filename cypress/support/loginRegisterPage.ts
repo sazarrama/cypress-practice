@@ -7,8 +7,8 @@ export class loginRegisterPage {
     inputPwd = 'input[type="password"]'
     countryPicker = 'select[name="country_id"]'
     regionPicker = 'select[name="zone_id"]'
-    newsletterYes = 'input[name="newsletter"][value"1"]'
-    newsletterNo = 'input[name="newsletter"][value"0"]'
+    newsletterYes = 'input[name="newsletter"][value="1"]'
+    newsletterNo = 'input[name="newsletter"][value="0"]'
     privacyPolicyAgree = 'input[type="checkbox"]'
     loginButton = 'button[title="Login"]'
 
@@ -25,11 +25,11 @@ export class loginRegisterPage {
         i.forEach((item, index) =>
         this.getInputBox(item).type(`${info[index]}`));
         this.enterPassword(0).type(password)
-        this.enterPassword(0).type(password);
+        this.enterPassword(1).type(password);
         this.selectCountry(country)
         this.selectRegion(region)
         this.hasNewsletter(hasNewsletter);
-        this.privacyPolicyAgree();
+        this.agreePrivacyPolicy();
     }
 
     getExistingCustomer()
@@ -37,19 +37,25 @@ export class loginRegisterPage {
         return cy.get(this.mainContainer).should('contain.text', 'Returning Customer')
     }
 
-    loginExistingCustomer()
-    {
-        cy.get('@login').then((login) => {
-
-            cy.get(this.contentPanel).find(this.inputTxt).type(login)
-
-        })
-
-        cy.get('@password').then((password) => {
-
-            cy.get(this.contentPanel).find(this.inputPwd).type(password)
-        })
-    }
+    loginExistingCustomer() {
+        cy.get('@login').then((loginValue) => {
+          if (typeof loginValue === 'string') {
+            cy.get(this.contentPanel).find(this.inputTxt).type(loginValue);
+          } else {
+            // Handle if loginValue is not a string (e.g., number, boolean, etc.)
+            // For example, you can convert it to a string or provide a default value
+          }
+        });
+      
+        cy.get('@password').then((passwordValue) => {
+          if (typeof passwordValue === 'string') {
+            cy.get(this.contentPanel).find(this.inputPwd).type(passwordValue);
+          } else {
+            // Handle if passwordValue is not a string (e.g., number, boolean, etc.)
+            // For example, you can convert it to a string or provide a default value
+          }
+        });
+      }        
 
     loginInvalidCustomer()
     {

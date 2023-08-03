@@ -11,7 +11,7 @@ module.exports = defineConfig({
       allureWriter(on, config);
         return config;
     },
-    specPattern: "cypress/e2e/**/*.ts",
+    specPattern: "cypress/e2e/**/*.js",
     baseUrl: 'https://automationteststore.com',
     defaultCommandTimeout: 10000,
     video: false,

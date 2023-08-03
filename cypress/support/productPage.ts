@@ -18,24 +18,29 @@ export class productPage {
         })
     }
 
-    getProductPrice()
+    getProductPrice() 
     {
-        cy.get(this.mainContainer).find(this.productPrice).children()
-        .invoke('text').then((price) => {
-            const priceString = price.trim();
-            return cy.wrap(priceString).as('productPrice')
-        })
+        cy.get(this.mainContainer)
+          .find(this.productPrice)
+          .should('be.visible') // Ensure the element is visible
+          .children('.productpageprice')
+          .invoke('text')
+          .then((priceText) => {
+            const priceString = priceText.trim();
+            cy.wrap(priceString).as('productPrice');
+          });
     }
 
-    getProductQuantity()
+    getProductQuantity() 
     {
         cy.get(this.mainContainer).find(this.productQty)
-        .invoke('text').then((quantity) => {
+        .should('be.visible') // Ensure the element is visible
+        .invoke('attr','value').then((quantity) => {
             const qtyString = quantity.trim();
-            return cy.wrap(qtyString).as('productQty');
-        })
+            return cy.wrap(qtyString).as('productQty')
+        })  
     }
-
+                    
     addProductToCart()
     {
         cy.get(this.mainContainer).find(this.addToCartBtn).click();

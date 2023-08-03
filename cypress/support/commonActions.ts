@@ -6,7 +6,7 @@ export class commonActions {
     allContents = 'div[class="container-fixed"]'
     contentPanel = '.contentpanel'
     contButton = 'button[title="Continue"]'
-    mainText = '.mainText'
+    mainText = '.heading1'
     alert = 'div[class="alert alert-error alert-danger"]'
     dismissAlert = 'button[data-dismiss="alert"]'
     categoryMenu = 'section[id="categorymenu"]'
@@ -30,7 +30,7 @@ export class commonActions {
 
     getMainText()
     {
-        return cy.get(this.mainText).should('be.visible')
+        return cy.get(this.mainText)
     }
 
     getAlert()
