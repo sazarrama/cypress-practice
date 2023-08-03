@@ -30,7 +30,7 @@ export class commonActions {
 
     getMainText()
     {
-        return cy.get(this.mainText)
+        return cy.get(this.mainText).should('be.visible')
     }
 
     getAlert()
