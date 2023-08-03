@@ -7,19 +7,17 @@ module.exports = defineConfig({
   videosFolder: 'cypress/videos',
   e2e: {
     setupNodeEvents(on, config) {
-      /* 
-      If you have any custom Cypress logic you want to implement, put it in this function.
-      For more info, see https://docs.cypress.io/guides/tooling/plugins-guide
-      and also https://docs.cypress.io/api/plugins/writing-a-plugin
-      Alternatively, you can import your old plugins/index.js file by uncommenting line 17
-      */
-      // return require('cypress/plugins/index.js')(on, config)
+      allureWriter(on, config);
+        return config;
     },
-    specPattern: "cypress/e2e/**/*.js",
+    specPattern: "cypress/e2e/**/*.ts",
     baseUrl: 'https://automationteststore.com',
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 10000,
     retries: 0,
+    env:{
+      "allureResultsPath": "allure-results"
+    }
     
   },
 })
