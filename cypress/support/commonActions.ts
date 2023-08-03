@@ -50,12 +50,14 @@ export class commonActions {
         cy.get(this.navigationBar).find(this.cartButton).click();
     }
 
-    getBasketQty() {
-
+    getBasketQty() 
+    {
         return cy.get(this.allContents).find(this.cartButton).children()
-        .invoke('text').then((basketQty) => {
-            const basket = basketQty.trim();
-            return cy.wrap(basket).as('basketQty');
+          .invoke('text').then((basketQty) => {
+            const basket = parseInt(basketQty.trim(), 10); // Parse the string to an integer
+            return cy.wrap(basket).as('basketQty'); // Alias the integer value
+            return basket
         })
     }
+
 } export const onCommonActions = new commonActions();

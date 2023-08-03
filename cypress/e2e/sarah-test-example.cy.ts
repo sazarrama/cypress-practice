@@ -7,6 +7,7 @@ import { onAccountPage } from '../support/accountPage';
 import { onCommonActions } from '../support/commonActions';
 import { onProductPage } from '../support/productPage';
 import { onCartPage } from '../support/cartPage';
+import { onPossiblyUnhandledRejection } from 'cypress/types/bluebird';
 
 describe('Tests the website functionality', () => {
 
@@ -106,5 +107,93 @@ describe('Tests the website functionality', () => {
         .getAlert()
         .should('contain.text', 'Error: E-Mail Address is already registered!');
  
+    })
+
+    it('Logs into the existing account and checks out a single item', () => {
+        onSiteHomePage
+        .clickLoginRegisterButton();
+        onCommonActions
+        .getMainText()
+        .should('contain.text', 'Account Login');
+        onLoginRegisterPage
+        .getExistingCustomer();
+        onLoginRegisterPage
+        .loginExistingCustomer();
+        onLoginRegisterPage
+        .clickLogIn();
+        onCommonActions
+        .getMainText()
+        .should('contain.text', 'My Account');
+        onCommonActions
+        .navigateToCategory("Makeup");
+        onProductPage
+        .getProduct("Tropiques Minerale Loose Bronzer");
+        onProductPage
+        .getProductPrice();
+        onProductPage
+        .getProductQuantity();
+        onCommonActions
+        .getBasketQty();
+        onProductPage
+        .addProductToCart();
+
+        //Catches any false failures from existing products in cart due to a broken test
+
+        cy.get('@basketQty').then((basket) => {
+            if (typeof basket === 'number' && basket <= 1) {
+              onCommonActions.openShoppingCart();
+              onCartPage.deleteItem();
+            } else {
+              return false;
+            }
+          });
+
+        onCommonActions
+        .getMainText()
+        .should('contain.text', 'Shopping Cart');
+        onCartPage
+        .getShippingCost()
+
+        cy.get('@productPrice').then((price) => {
+
+            cy.get('@productQty').then((qty) => {
+
+                cy.get('@shippingCost').then((shipping) => {
+
+                    //Gets values from the items and compares them to the cart
+
+                    onCartPage
+                    .getCartTableRow(1).should('contain', 'Tropiques Minerale Loose Bronzer');
+
+                    onCartPage
+                    .getCartTableRow(1).invoke('text').should('contain', price);
+
+                    onCartPage
+                    .getCartTableRow(1)
+                    .get('input').invoke('val')
+                    .should('eq', qty);
+
+                        onCartPage
+                        .getTotalTableRow(0).invoke('text').should('contain', price);
+
+                        onCartPage
+                        .getTotalTableRow(1).invoke('text').should('contain', shipping);
+
+                        onCartPage
+                        .getTotalTableRow(2)
+                        .invoke('text')
+                        .then(($grandTotal) => {
+                            const grandTotal = parseFloat($grandTotal.trim().replace('Total:', '')
+                            .replace('$', ''))
+                            const totalPrice = parseFloat(price.text().replace('Total:', '')
+                            .replace('$', ''))
+                            const shippingTotal = parseFloat(shipping.text().replace('Total $', ''))
+                            expect((grandTotal)).to.equal((totalPrice) + (shippingTotal))
+                        })
+                })
+            })
+        })
+
+    
     })
 })

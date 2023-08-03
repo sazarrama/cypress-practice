@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cypress": "^12.10.0",
-    "npx": "^10.2.2"
+    "jquery": "^3.7.0",
+    "npx": "^3.0.0"
   },
   "directories": {
     "test": "tests"
@@ -27,7 +27,8 @@
   "author": "James Sheasby Thomas (@RightSaidJames)",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^11.0.0",
-    "@shelex/cypress-allure-plugin": "^2.40.0"
+    "@shelex/cypress-allure-plugin": "^2.40.0",
+    "cypress": "^4.12.1",
+    "npm-run-all": "^4.1.5"
   }
 }
