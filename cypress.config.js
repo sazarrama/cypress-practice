@@ -13,6 +13,7 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/**/*.ts",
     baseUrl: 'https://automationteststore.com',
     defaultCommandTimeout: 10000,
+    video: false,
     pageLoadTimeout: 10000,
     retries: 0,
     env:{
